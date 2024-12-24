@@ -5,5 +5,6 @@ import org.telran.pizzaservice.de.entity.Pizzeria;
 import java.util.List;
 
 public interface PizzeriaService {
-    List<Pizzeria> getAll();
+
+    List<Pizzeria> getAllPizzerias();
 }

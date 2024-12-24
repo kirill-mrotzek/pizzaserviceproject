@@ -5,6 +5,7 @@ import org.telran.pizzaservice.de.entity.Pizza;
 import org.telran.pizzaservice.de.enums.Ingredients;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -29,5 +30,10 @@ public class PizzaInMemoryRepository implements PizzaRepository {
     @Override
     public Pizza getByTitle(String title) {
         return storage.get(title);
+    }
+
+    @Override
+    public List<Pizza> getAllPizzas() {
+        return storage.values().stream().toList();
     }
 }

@@ -17,4 +17,9 @@ public class PizzaServiceImpl implements PizzaService {
     public Pizza getPizzaByTitle(String title) {
         return pizzaRepository.getByTitle(title);
     }
+
+    @Override
+    public List<Pizza> getAllPizzas() {
+        return pizzaRepository.getAllPizzas();
+    }
 }

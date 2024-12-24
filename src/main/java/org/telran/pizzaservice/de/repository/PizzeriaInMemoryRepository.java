@@ -27,7 +27,7 @@ public class PizzeriaInMemoryRepository implements PizzeriaRepository {
     }
 
     @Override
-    public List<Pizzeria> getAll() {
+    public List<Pizzeria> getAllPizzerias() {
         return pizzeriaMap.values().stream().toList();
     }
 }

@@ -17,7 +17,8 @@ public class PizzeriaController {
     private PizzeriaService pizzeriaService;
 
     @GetMapping
-    public List<Pizzeria> getAll() {
-        return pizzeriaService.getAll();
+    public List<Pizzeria> getAllPizzerias() {
+        return pizzeriaService.getAllPizzerias();
     }
+
 }

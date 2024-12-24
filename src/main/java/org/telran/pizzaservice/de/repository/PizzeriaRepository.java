@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface PizzeriaRepository {
 
-    List<Pizzeria> getAll();
+    List<Pizzeria> getAllPizzerias();
 }

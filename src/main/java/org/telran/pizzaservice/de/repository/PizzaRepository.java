@@ -7,4 +7,6 @@ import java.util.List;
 public interface PizzaRepository {
 
     Pizza getByTitle(String title);
+
+    List<Pizza> getAllPizzas();
 }
