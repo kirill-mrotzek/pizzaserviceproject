@@ -1,5 +1,6 @@
 package org.telran.pizzaservice.de.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.telran.pizzaservice.de.entity.Price;
@@ -12,18 +13,20 @@ public class PriceController {
     @Autowired
     private PriceService priceService;
 
-    @PostMapping("/{pizza}/set-price")
-    public Price setPrice(@PathVariable(name = "pizza") String pizza, @RequestBody double price) {
-        return priceService.setPrice(pizza, price);
+    @DeleteMapping("/{id}")
+    public void delete (@PathVariable Long id) {
+        priceService.delete(id);
     }
 
-    @PutMapping("/{pizza}/change-discount")
-    public Price changeDiscount(@PathVariable (name = "pizza") String pizza, @RequestBody double newDiscount) {
-        return priceService.changeDiscount(pizza, newDiscount);
+    @PostMapping
+    public Price create(@RequestBody @Valid Price price) {
+        return priceService.create(price);
     }
 
-    @DeleteMapping("/{pizza}")
-    public void delete (@PathVariable(name = "pizza") String pizza) {
-        priceService.delete(pizza);
+    @PutMapping("/{id}/discount")
+    public Price editDiscount(@PathVariable Long id, @RequestParam double discount) {
+        return priceService.editDiscount(id, discount);
     }
+
+
 }

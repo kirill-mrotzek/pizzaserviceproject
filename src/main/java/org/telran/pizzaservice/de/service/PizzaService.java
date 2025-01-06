@@ -1,7 +1,6 @@
 package org.telran.pizzaservice.de.service;
 
 import org.telran.pizzaservice.de.entity.Pizza;
-import org.telran.pizzaservice.de.enums.Ingredients;
 
 import java.util.List;
 
@@ -9,5 +8,13 @@ public interface PizzaService {
 
     Pizza getPizzaByTitle(String title);
 
-    List<Pizza> getAllPizzas();
+    Pizza create(Pizza pizza);
+
+    List<Pizza> getAll();
+
+    void delete(Long id);
+
+    Pizza setPrice(Long id, double price);
+
+    Pizza editPizza(Long id, Pizza updatedPizza);
 }

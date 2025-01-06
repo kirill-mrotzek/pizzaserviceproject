@@ -1,24 +1,47 @@
 package org.telran.pizzaservice.de.entity;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "price_list")
 public class Price {
 
-    private String pizza;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @OneToOne
+    @JoinColumn(name = "pizza_id")
+    private Pizza pizza;
 
     private double price;
 
     private double discount;
 
-    public Price(String pizza, double price, double discount) {
+    public Price(Long id, Pizza pizza, double price, double discount) {
+        this.id = id;
         this.pizza = pizza;
         this.price = price;
         this.discount = discount;
     }
 
-    public String getPizza() {
+    public Price() {
+        //
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Pizza getPizza() {
         return pizza;
     }
 
-    public void setPizza(String pizza) {
+    public void setPizza(Pizza pizza) {
         this.pizza = pizza;
     }
 
@@ -41,7 +64,8 @@ public class Price {
     @Override
     public String toString() {
         return "Price{" +
-                "pizza='" + pizza + '\'' +
+                "id=" + id +
+                ", pizza='" + pizza + '\'' +
                 ", price=" + price +
                 ", discount=" + discount +
                 '}';
