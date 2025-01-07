@@ -35,10 +35,13 @@ public class SecurityConfig {
 //                          .requestMatchers("/api/addresses/**").authenticated()
 //                        .requestMatchers("api/pizzas").hasRole("ADMIN") //для всего контроллера PizzaController
 //                        .requestMatchers("/api/pizzerias/**").authenticated()
-                        .anyRequest().permitAll())
-                .httpBasic(Customizer.withDefaults())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                        .requestMatchers("/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/swagger-ui.htm;").permitAll()
+                        .anyRequest().permitAll());
+//                .httpBasic(Customizer.withDefaults())
+//                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

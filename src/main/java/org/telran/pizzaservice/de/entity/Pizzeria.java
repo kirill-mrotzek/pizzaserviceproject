@@ -1,6 +1,8 @@
 package org.telran.pizzaservice.de.entity;
 
 import jakarta.persistence.*;
+
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +18,9 @@ private String city;
 
 private String address;
 
-private String workingHours;
+private LocalTime openingTime;
+
+private LocalTime closingTime;
 
 
     @OneToMany(mappedBy = "pizzeria", cascade = CascadeType.ALL)
@@ -26,11 +30,12 @@ private String workingHours;
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Pizzeria(Long id, String city, String address, String workingHours, List<Pizza> pizzas, User user) {
+    public Pizzeria(Long id, String city, String address, LocalTime openingTime, LocalTime closingTime, List<Pizza> pizzas, User user) {
         this.id = id;
         this.city = city;
         this.address = address;
-        this.workingHours = workingHours;
+        this.openingTime = openingTime;
+        this.closingTime = closingTime;
         this.pizzas = pizzas;
         this.user = user;
     }
@@ -64,12 +69,20 @@ private String workingHours;
         this.address = address;
     }
 
-    public String getWorkingHours() {
-        return workingHours;
+    public LocalTime getOpeningTime() {
+        return openingTime;
     }
 
-    public void setWorkingHours(String workingHours) {
-        this.workingHours = workingHours;
+    public void setOpeningTime(LocalTime openingTime) {
+        this.openingTime = openingTime;
+    }
+
+    public LocalTime getClosingTime() {
+        return closingTime;
+    }
+
+    public void setClosingTime(LocalTime closingTime) {
+        this.closingTime = closingTime;
     }
 
     public List<Pizza> getPizzas() {
@@ -94,7 +107,8 @@ private String workingHours;
                 "id=" + id +
                 ", city='" + city + '\'' +
                 ", address='" + address + '\'' +
-                ", workingHours='" + workingHours + '\'' +
+                ", openingTime=" + openingTime +
+                ", closingTime=" + closingTime +
                 ", pizzas=" + pizzas +
                 ", user=" + user +
                 '}';

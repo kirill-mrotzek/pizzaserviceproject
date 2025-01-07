@@ -3,6 +3,7 @@ package org.telran.pizzaservice.de.service;
 import org.telran.pizzaservice.de.entity.Pizza;
 import org.telran.pizzaservice.de.entity.Pizzeria;
 
+import java.time.LocalTime;
 import java.util.List;
 
 public interface PizzeriaService {
@@ -17,4 +18,6 @@ public interface PizzeriaService {
     Pizzeria editPizzeria(Long id, Pizzeria updatedPizzeria);
 
     Pizzeria addPizzaToPizzeria(Long pizzeriaId, Pizza pizza);
+
+    boolean canAcceptOrder(Pizzeria pizzeria, LocalTime currentTime);
 }

@@ -4,12 +4,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.telran.pizzaservice.de.entity.Pizza;
 import org.telran.pizzaservice.de.entity.Pizzeria;
 import org.telran.pizzaservice.de.exception.PizzeriaNotFoundException;
 import org.telran.pizzaservice.de.repository.PizzaJpaRepository;
 import org.telran.pizzaservice.de.repository.PizzeriaJpaRepository;
 
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -48,21 +50,26 @@ public class PizzeriaServiceImpl implements PizzeriaService {
 
         existingPizzeria.setCity(updatedPizzeria.getCity());
         existingPizzeria.setAddress(updatedPizzeria.getAddress());
-        existingPizzeria.setWorkingHours(updatedPizzeria.getWorkingHours());
+        existingPizzeria.setOpeningTime(updatedPizzeria.getOpeningTime());
+        existingPizzeria.setClosingTime(updatedPizzeria.getClosingTime());
         existingPizzeria.setUser(updatedPizzeria.getUser());
 
         return pizzeriaJpaRepository.save(existingPizzeria);
     }
 
-    @Override
+    @Transactional
     public Pizzeria addPizzaToPizzeria(Long pizzeriaId, Pizza pizza) {
         Pizzeria pizzeria = pizzeriaJpaRepository.findById(pizzeriaId)
-                .orElseThrow(() -> new RuntimeException("Pizzeria with id " + pizzeriaId + " not found"));
+                .orElseThrow(() -> new PizzeriaNotFoundException("Pizzeria with id " + pizzeriaId + " not found"));
 
         pizza.setPizzeria(pizzeria);
         pizzaJpaRepository.save(pizza);
         pizzeria.getPizzas().add(pizza);
 
         return pizzeriaJpaRepository.save(pizzeria);
+    }
+
+    public boolean canAcceptOrder(Pizzeria pizzeria, LocalTime currentTime) {
+        return !currentTime.isBefore(pizzeria.getOpeningTime()) && !currentTime.isAfter(pizzeria.getClosingTime());
     }
 }

@@ -14,18 +14,18 @@ public class Payment {
     @Column
     private double totalSum;
 
-    @OneToOne
-    @JoinColumn(name = "order_id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "order_id", nullable = false)
     private Order order;
 
     @Column
-    private LocalDateTime paymentDate;
+    private LocalDateTime paidAt;
 
     public Payment(Long id, double totalSum, Order order, LocalDateTime paymentDate) {
         this.id = id;
         this.totalSum = totalSum;
         this.order = order;
-        this.paymentDate = paymentDate;
+        this.paidAt = paymentDate;
     }
 
     public Payment() {
@@ -56,11 +56,11 @@ public class Payment {
         this.order = order;
     }
 
-    public LocalDateTime getPaymentDate() {
-        return paymentDate;
+    public LocalDateTime getPaidAt() {
+        return paidAt;
     }
 
-    public void setPaymentDate(LocalDateTime paymentDate) {
-        this.paymentDate = paymentDate;
+    public void setPaidAt(LocalDateTime paidAt) {
+        this.paidAt = paidAt;
     }
 }

@@ -14,6 +14,10 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pizzeria_id")
+    private Pizzeria pizzeria;
+
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<CartItem> cartItems = new ArrayList<>();
 
@@ -28,7 +32,7 @@ public class Order {
     @Column
     private double totalSum;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "payment_id", referencedColumnName = "id")
     private Payment payment;
 
@@ -36,13 +40,16 @@ public class Order {
     @Column(nullable = false)
     private OrderStatus status = OrderStatus.CREATED;
 
-
     @Column
     private LocalDateTime createdAt;
 
-    public Order(Long id, List<CartItem> cartItems, User user, DeliveryAddress deliveryAddress,
-                 double totalSum, Payment payment, OrderStatus status, LocalDateTime createdAt) {
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+
+    public Order(Long id, Pizzeria pizzeria, List<CartItem> cartItems, User user, DeliveryAddress deliveryAddress, double totalSum, Payment payment, OrderStatus status, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
+        this.pizzeria = pizzeria;
         this.cartItems = cartItems;
         this.user = user;
         this.deliveryAddress = deliveryAddress;
@@ -50,11 +57,11 @@ public class Order {
         this.payment = payment;
         this.status = status;
         this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public Order() {
-        this.createdAt = LocalDateTime.now();
-        this.status = OrderStatus.CREATED;
+        //
     }
 
     public Long getId() {
@@ -63,6 +70,14 @@ public class Order {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Pizzeria getPizzeria() {
+        return pizzeria;
+    }
+
+    public void setPizzeria(Pizzeria pizzeria) {
+        this.pizzeria = pizzeria;
     }
 
     public List<CartItem> getCartItems() {
@@ -119,5 +134,13 @@ public class Order {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

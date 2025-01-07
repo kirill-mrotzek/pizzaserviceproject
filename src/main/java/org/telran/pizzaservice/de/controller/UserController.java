@@ -1,11 +1,17 @@
 package org.telran.pizzaservice.de.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
+import org.springframework.web.servlet.mvc.AbstractController;
 import org.telran.pizzaservice.de.converter.Converter;
 import org.telran.pizzaservice.de.dto.UserCreateDto;
 import org.telran.pizzaservice.de.dto.UserResponseDto;
@@ -22,7 +28,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/users") // http://localhost:8080/api/users
-public class UserController {
+public class UserController extends UserAbstractController {
 
     @Autowired
     private UserService userService;
@@ -39,6 +45,8 @@ public class UserController {
     @Autowired
     private AuthenticationService authenticationService;
 
+
+
     @PostMapping
     public UserResponseDto create(@RequestBody @Valid UserCreateDto userDto) {
         User user = createConverter.toEntity(userDto);
@@ -53,6 +61,7 @@ public class UserController {
         return authenticationService.authenticate(request);
     }
 
+    @Override
     @GetMapping
     public List<User> getAll() {
         return userService.getAll();

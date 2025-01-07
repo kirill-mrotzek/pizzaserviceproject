@@ -28,7 +28,9 @@ public class PizzeriaController {
     }
 
     @PutMapping("/{id}")
-    public Pizzeria editPizzeria(@PathVariable Long id, @RequestBody Pizzeria updatedPizzeria) {
+    public Pizzeria editPizzeria(
+            @PathVariable Long id,
+            @RequestBody Pizzeria updatedPizzeria) {
         return pizzeriaService.editPizzeria(id, updatedPizzeria);
     }
 
